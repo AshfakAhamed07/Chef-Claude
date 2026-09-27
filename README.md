@@ -1,19 +1,68 @@
-# Getting Started
-Install the dependencies and run the project
+# Chef Claude 👨‍🍳
+
+Chef Claude is a React application that helps users generate recipe ideas based on ingredients they have available.
+
+This project is being built while following **Bob Ziroll's React course on Scrimba** as part of my React learning journey.
+
+## 🚧 Project Status
+
+**In progress**
+
+I'm continuing to build and improve this project as I progress through the React course.
+
+## 🛠️ Technologies
+
+* React
+* JavaScript
+* Vite
+* CSS
+* HTML
+
+## 📚 React Concepts Practiced
+
+Through this project, I'm practicing concepts including:
+
+* React components
+* Props
+* State
+* Event handling
+* Forms
+* Conditional rendering
+* Rendering lists with `.map()`
+* Component organization
+* React hooks
+
+## 🚀 Getting Started
+
+Clone the repository and navigate into the project:
+
+```bash
+git clone git@github.com:AshfakAhamed07/Chef-Claude.git
+cd Chef-Claude
 ```
+
+Install the dependencies:
+
+```bash
 npm install
-npm start
 ```
 
-Head over to https://vitejs.dev/ to learn more about configuring vite
-## About Scrimba
+Start the development server:
 
-At Scrimba our goal is to create the best possible coding school at the cost of a gym membership! 💜
-If we succeed with this, it will give anyone who wants to become a software developer a realistic shot at succeeding, regardless of where they live and the size of their wallets 🎉
-The Fullstack Developer Path aims to teach you everything you need to become a Junior Developer, or you could go further with one of our advanced courses 🚀
+```bash
+npm run dev
+```
 
-- [Our courses](https://scrimba.com/courses)
-- [The Frontend Career Path](https://scrimba.com/fullstack-path-c0fullstack)
-- [Become a Scrimba Pro member](https://scrimba.com/pricing)
+Then open the local development URL shown in the terminal.
 
-Happy Coding!
+## 🎓 Acknowledgment
+
+This project is based on a project from **Bob Ziroll's React course on Scrimba**.
+
+The project is being used for learning and practicing React development.
+
+## 📌 Learning Journey
+
+I'm building this project incrementally and using Git to track my progress as I learn React.
+
+More improvements and features will be added as I continue through the course.
