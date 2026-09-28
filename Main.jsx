@@ -10,12 +10,14 @@ export default function Main() {
     "ground beef",
     "tomato paste",
   ]);
+
   const [recipeShown, setRecipeShown] = React.useState(false);
 
   const [recipe, setRecipe] = React.useState("");
 
-  async function toggleRecipeShown() {
+  async function getRecipe() {
     const recipeMarkdown = await getRecipeFromMistral(ingredients);
+
     setRecipe(recipeMarkdown);
     setRecipeShown(true);
   }
@@ -38,10 +40,7 @@ export default function Main() {
       </form>
 
       {ingredients.length > 0 && (
-        <IngredientsList
-          ingredients={ingredients}
-          toggleRecipeShown={toggleRecipeShown}
-        />
+        <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
       )}
 
       {recipeShown && <ClaudeRecipe recipe={recipe} />}
