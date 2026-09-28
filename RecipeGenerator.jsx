@@ -4,12 +4,7 @@ import ClaudeRecipe from "./components/ClaudeRecipe";
 import { generateRecipe } from "./ai";
 
 export default function RecipeGenerator() {
-  const [ingredients, setIngredients] = React.useState([
-    "all the main spices",
-    "pasta",
-    "ground beef",
-    "tomato paste",
-  ]);
+  const [ingredients, setIngredients] = React.useState([]);
 
   const [recipeShown, setRecipeShown] = React.useState(false);
 
