@@ -1,9 +1,9 @@
 import React from "react";
 import IngredientsList from "./components/IngredientsList";
 import ClaudeRecipe from "./components/ClaudeRecipe";
-import { getRecipeFromMistral } from "./ai";
+import { generateRecipe } from "./ai";
 
-export default function Main() {
+export default function RecipeGenerator() {
   const [ingredients, setIngredients] = React.useState([
     "all the main spices",
     "pasta",
@@ -16,7 +16,7 @@ export default function Main() {
   const [recipe, setRecipe] = React.useState("");
 
   async function getRecipe() {
-    const recipeMarkdown = await getRecipeFromMistral(ingredients);
+    const recipeMarkdown = await generateRecipe(ingredients);
 
     setRecipe(recipeMarkdown);
     setRecipeShown(true);

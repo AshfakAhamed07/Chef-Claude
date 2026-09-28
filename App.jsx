@@ -1,11 +1,11 @@
 import Header from "./Header"
-import Main from "./Main"
+import RecipeGenerator from "./RecipeGenerator";
 
 export default function App() {
   return (
     <>
       <Header />
-      <Main />
+      <RecipeGenerator />
     </>
   )
 }
