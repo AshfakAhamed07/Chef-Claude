@@ -1,10 +1,10 @@
 import React from "react";
-import IngredientsList from "./components/IngredientsList";
-import ClaudeRecipe from "./components/ClaudeRecipe";
-import { generateRecipe } from "./ai";
+import IngredientsList from "./IngredientsList";
+import ClaudeRecipe from "./ClaudeRecipe";
+import { generateRecipe } from "../ai";
 
 export default function RecipeGenerator() {
-  const [ingredients, setIngredients] = React.useState([]);
+  const [ingredients, setIngredients] = React.useState(["chicken", "all the main spices", "corn", "heavy cream", "pasta"]);
 
   const [recipeShown, setRecipeShown] = React.useState(false);
 
