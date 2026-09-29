@@ -10,6 +10,14 @@ export default function RecipeGenerator() {
 
   const [recipe, setRecipe] = React.useState("");
 
+  const recipeSection = React.useRef(null)
+
+  React.useEffect(() => {
+    if (recipe && recipeSection.current) {
+      recipeSection.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [recipe]);
+
   async function getRecipe() {
     const recipeMarkdown = await generateRecipe(ingredients);
 
@@ -35,7 +43,7 @@ export default function RecipeGenerator() {
       </form>
 
       {ingredients.length > 0 && (
-        <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
+        <IngredientsList ingredients={ingredients} getRecipe={getRecipe} ref={recipeSection} />
       )}
 
       {recipeShown && <ClaudeRecipe recipe={recipe} />}
