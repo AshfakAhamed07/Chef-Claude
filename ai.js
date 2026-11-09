@@ -38,5 +38,6 @@ export async function generateRecipe(ingredientsArr) {
     "HTTP response:",
     JSON.stringify(err.httpResponse, null, 2)
   );
+  throw err;
 }
 }
