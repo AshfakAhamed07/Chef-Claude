@@ -27,7 +27,9 @@ header > h1 {
 }
 
 main {
-    padding: 30px 30px 10px;
+    padding: 30px 30px 40px;
+    max-width: 720px;
+    margin: 0 auto;
 }
 
 .add-ingredient-form {
@@ -56,6 +58,7 @@ main {
     width: 150px;
     font-size: 0.875rem;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .add-ingredient-form > button::before {
@@ -63,13 +66,73 @@ main {
     margin-right: 5px;
 }
 
+.ingredients-section > h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #141413;
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
 ul.ingredients-list {
-    margin-bottom: 48px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 48px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 ul.ingredients-list > li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
     color: #475467;
-    line-height: 28px;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+ul.ingredients-list > li:hover {
+    border-color: #D1D5DB;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+}
+
+.ingredient-name {
+    text-transform: capitalize;
+    word-break: break-word;
+}
+
+.remove-ingredient-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-left: 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #9CA3AF;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.remove-ingredient-btn:hover {
+    background-color: #FDECE8;
+    color: #D17557;
+}
+
+.remove-ingredient-btn:focus-visible {
+    outline: 2px solid #D17557;
+    outline-offset: 2px;
 }
 
 .get-recipe-container {
@@ -103,6 +166,12 @@ ul.ingredients-list > li {
     font-family: Inter, sans-serif;
     font-size: 0.875rem;
     cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.get-recipe-container button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 .suggested-recipe-container {
@@ -114,4 +183,70 @@ ul.ingredients-list > li {
 
 .suggested-recipe-container ul li, .suggested-recipe-container ol li {
     margin-bottom: 8px;
+}
+
+.error-message {
+    color: #B93815;
+    background-color: #FDECE8;
+    border: 1px solid #F7C6B9;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    margin-top: 16px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    header {
+        height: 68px;
+    }
+
+    header > img {
+        width: 40px;
+    }
+
+    header > h1 {
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding: 20px 16px 32px;
+    }
+
+    .add-ingredient-form {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+    }
+
+    .add-ingredient-form > input {
+        max-width: 100%;
+        padding: 11px 13px;
+    }
+
+    .add-ingredient-form > button {
+        width: 100%;
+        padding: 11px 16px;
+    }
+
+    .get-recipe-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 18px 20px;
+    }
+
+    .get-recipe-container h3 {
+        margin-top: 0;
+        margin-bottom: 4px;
+    }
+
+    .get-recipe-container p {
+        margin: 0;
+    }
+
+    .get-recipe-container button {
+        width: 100%;
+        padding: 11px 17px;
+    }
 }

@@ -1,9 +1,21 @@
 export default function IngredientsList(props) {
   const ingredientsListItems = props.ingredients.map((ingredient) => (
-    <li key={ingredient}>{ingredient}</li>
+    <li key={ingredient}>
+      <span className="ingredient-name">{ingredient}</span>
+      <button
+        type="button"
+        className="remove-ingredient-btn"
+        onClick={() => props.removeIngredient(ingredient)}
+        aria-label={`Remove ${ingredient}`}
+        title={`Remove ${ingredient}`}
+      >
+        &times;
+      </button>
+    </li>
   ));
+
   return (
-    <section>
+    <section className="ingredients-section">
       <h2>Ingredients on hand:</h2>
       <ul className="ingredients-list" aria-live="polite">
         {ingredientsListItems}
