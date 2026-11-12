@@ -17,6 +17,7 @@ export default function RecipeGenerator() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [ingredientError, setIngredientError] = React.useState("");
+  const [editingIngredient, setEditingIngredient] = React.useState(null);
 
   const recipeSection = React.useRef(null);
 
@@ -85,6 +86,44 @@ export default function RecipeGenerator() {
     setRecipeShown(false);
   }
 
+  function startEditing(ingredient) {
+    setEditingIngredient(ingredient);
+  }
+
+  function saveIngredient(oldIngredient, newIngredient) {
+    const trimmedIngredient = newIngredient.trim();
+
+    if (trimmedIngredient === "") {
+      setIngredientError("Please enter an ingredient.");
+      return;
+    }
+
+    const isDuplicate = ingredients.some(
+      (item) =>
+        item.toLowerCase() === trimmedIngredient.toLowerCase() &&
+        item.toLowerCase() !== oldIngredient.toLowerCase(),
+    );
+
+    if (isDuplicate) {
+      setIngredientError("This ingredient already exists.");
+      return;
+    }
+
+    setIngredients((prevIngredients) =>
+      prevIngredients.map((item) =>
+        item === oldIngredient ? trimmedIngredient : item,
+      ),
+    );
+
+    setIngredientError("");
+    setEditingIngredient(null);
+  }
+
+  function cancelEditing() {
+    setEditingIngredient(null);
+    setIngredientError("");
+  }
+
   return (
     <main>
       <form action={addIngredient} className="add-ingredient-form">
@@ -110,6 +149,10 @@ export default function RecipeGenerator() {
           ref={recipeSection}
           loading={loading}
           removeIngredient={removeIngredient}
+          editingIngredient={editingIngredient}
+          startEditing={startEditing}
+          saveIngredient={saveIngredient}
+          cancelEditing={cancelEditing}
         />
       )}
       {error && <p className="error-message">{error}</p>}
