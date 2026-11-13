@@ -28,6 +28,18 @@ export default function SavedRecipes({ favourites, onSelect, onDelete }) {
     }
   }
 
+  function handleDelete(fav) {
+    const recipeTitle = getRecipeTitle(fav.recipe);
+
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${recipeTitle}" from your favourites?`,
+    );
+
+    if (confirmed) {
+      onDelete(fav.id);
+    }
+  }
+
   return (
     <section className="saved-recipes-section" aria-label="Saved recipes">
       <h2>Saved Favourites ({favourites.length})</h2>
@@ -52,7 +64,7 @@ export default function SavedRecipes({ favourites, onSelect, onDelete }) {
               <button
                 type="button"
                 className="remove-ingredient-btn"
-                onClick={() => onDelete(fav.id)}
+                onClick={() => handleDelete(fav)}
                 aria-label={`Delete ${getRecipeTitle(fav.recipe)}`}
                 title="Delete saved recipe"
               >
