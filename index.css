@@ -434,6 +434,104 @@ ul.saved-recipes-list {
   border-color: #d1d5db;
 }
 
+.saved-recipes-search-input {
+  width: 100%;
+  padding: 9px 13px;
+  margin-bottom: 16px;
+  font-family: Inter, sans-serif;
+  font-size: 0.9375rem;
+  color: #141413;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}
+
+.saved-recipes-search-input:focus {
+  outline: 2px solid #d17557;
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.no-saved-results {
+  color: #6b7280;
+  font-size: 0.9375rem;
+  background-color: #f0efeb;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 0;
+  text-align: center;
+}
+
+.saved-recipes-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.saved-recipes-search-input,
+.saved-recipes-sort-select {
+  margin: 0;
+  height: 38px;
+  line-height: 1;
+  font-family: Inter, sans-serif;
+  font-size: 0.875rem;
+  color: #141413;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}
+
+.saved-recipes-search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0 13px;
+}
+
+.saved-recipes-sort-select {
+  width: 100%;
+  padding: 0 34px 0 12px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select-wrapper {
+  position: relative;
+  flex: 0 0 160px;
+}
+
+.select-chevron {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.saved-recipes-search-input:focus,
+.saved-recipes-sort-select:focus {
+  outline: 2px solid #d17557;
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.no-saved-results {
+  color: #6b7280;
+  font-size: 0.9375rem;
+  background-color: #f0efeb;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 0;
+  text-align: center;
+}
 
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
@@ -524,5 +622,18 @@ ul.saved-recipes-list {
   .saved-recipe-actions {
     width: 100%;
     justify-content: flex-end;
+  }
+
+  .saved-recipes-controls {
+    flex-direction: column;
+  }
+
+  .saved-recipes-sort-select {
+    width: 100%;
+  }
+
+  .select-wrapper {
+    width: 100%;
+    flex: none;
   }
 }
