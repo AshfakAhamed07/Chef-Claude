@@ -14,6 +14,11 @@ export default function IngredientsList(props) {
             defaultValue={ingredient}
             aria-label={`Edit ${ingredient}`}
             autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "escape") {
+                props.cancelEditing();
+              }
+            }}
           />
           <div className="ingredient-actions">
             <button type="submit" className="save-ingredient-btn">

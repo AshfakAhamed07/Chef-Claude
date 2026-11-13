@@ -1,6 +1,7 @@
 import React from "react";
 import IngredientsList from "./IngredientsList";
 import ClaudeRecipe from "./ClaudeRecipe";
+import SavedRecipes from "./SavedRecipes";
 import { generateRecipe } from "../ai";
 
 export default function RecipeGenerator() {
@@ -18,8 +19,21 @@ export default function RecipeGenerator() {
   const [error, setError] = React.useState("");
   const [ingredientError, setIngredientError] = React.useState("");
   const [editingIngredient, setEditingIngredient] = React.useState(null);
+  const [favourites, setFavourites] = React.useState(() => {
+    try {
+      const savedFavourites = localStorage.getItem("chefClaudeFavourites");
+      return savedFavourites ? JSON.parse(savedFavourites) : [];
+    } catch (err) {
+      console.error("Failed to parse saved favourites:", err);
+      return [];
+    }
+  });
 
   const recipeSection = React.useRef(null);
+
+  const isCurrentRecipeSaved = React.useMemo(() => {
+    return favourites.some((fav) => fav.recipe === recipe);
+  }, [favourites, recipe]);
 
   React.useEffect(() => {
     if (recipe && recipeSection.current) {
@@ -32,6 +46,14 @@ export default function RecipeGenerator() {
     const timer = setTimeout(() => setError(""), 5000);
     return () => clearTimeout(timer);
   }, [error]);
+
+  React.useEffect(() => {
+    try {
+      localStorage.setItem("chefClaudeFavourites", JSON.stringify(favourites));
+    } catch (err) {
+      console.error("Failed to save favourites to localStorage:", err);
+    }
+  }, [favourites]);
 
   function handleInputChange() {
     if (ingredientError) {
@@ -56,17 +78,45 @@ export default function RecipeGenerator() {
     }
   }
 
+  function saveFavourite() {
+    if (!recipe || isCurrentRecipeSaved) return;
+
+    const newFavourite = {
+      id: crypto.randomUUID(),
+      recipe,
+      ingredients: [...ingredients],
+      createdAt: new Date().toISOString(),
+    };
+    setFavourites((prevFavourites) => [newFavourite, ...prevFavourites]);
+  }
+
+  function loadFavourite(fav) {
+    setIngredients(fav.ingredients);
+    setRecipe(fav.recipe);
+    setRecipeShown(true);
+    setError("");
+  }
+
+  function deleteFavourite(id) {
+    setFavourites((prevFavourites) =>
+      prevFavourites.filter((fav) => fav.id !== id),
+    );
+  }
+
   function addIngredient(formData) {
-    const newIngredient = formData.get("ingredient").trim();
+    const rawIngredient = formData.get("ingredient");
+    const newIngredient =
+      typeof rawIngredient === "string" ? rawIngredient.trim() : "";
 
     if (newIngredient === "") {
       setIngredientError("Please enter an ingredient.");
       return;
     }
 
-    const ingredientExist = ingredients.some((existingIngredient) => {
-      return existingIngredient.toLowerCase() === newIngredient.toLowerCase();
-    });
+    const ingredientExist = ingredients.some(
+      (existingIngredient) =>
+        existingIngredient.toLowerCase() === newIngredient.toLowerCase(),
+    );
 
     if (ingredientExist) {
       setIngredientError("This ingredient is already in your list!");
@@ -78,7 +128,9 @@ export default function RecipeGenerator() {
 
   function removeIngredient(ingredientToRemove) {
     setIngredientError("");
-
+    if (editingIngredient === ingredientToRemove) {
+      setEditingIngredient(null);
+    }
     setIngredients((prevIngredients) =>
       prevIngredients.filter((item) => item !== ingredientToRemove),
     );
@@ -117,6 +169,7 @@ export default function RecipeGenerator() {
 
     setIngredientError("");
     setEditingIngredient(null);
+    setRecipeShown(false);
   }
 
   function cancelEditing() {
@@ -155,8 +208,24 @@ export default function RecipeGenerator() {
           cancelEditing={cancelEditing}
         />
       )}
-      {error && <p className="error-message">{error}</p>}
-      {recipeShown && <ClaudeRecipe recipe={recipe} />}
+      {error && (
+        <p className="error-message" role="alert">
+          {error}
+        </p>
+      )}
+      {recipeShown && (
+        <ClaudeRecipe
+          recipe={recipe}
+          onSave={saveFavourite}
+          isSaved={isCurrentRecipeSaved}
+        />
+      )}
+
+      <SavedRecipes
+        favourites={favourites}
+        onSelect={loadFavourite}
+        onDelete={deleteFavourite}
+      />
     </main>
   );
 }
