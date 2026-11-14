@@ -18,7 +18,7 @@ export async function generateRecipe(ingredientsArr) {
       throw new Error(data.error || "Failed to generate recipe.");
     }
 
-    return data.recipe;
+    return data.recipeData;
   } catch (error) {
     console.error("Recipe generation error:", error);
     throw error;

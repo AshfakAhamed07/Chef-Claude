@@ -5,15 +5,74 @@ const cors = require("cors");
 const Groq = require("groq-sdk");
 
 const SYSTEM_PROMPT = `
-You are Chef Claude, an assistant that receives a list of ingredients
-and suggests a recipe the user could make with some or all of them.
+You are Chef Claude, an assistant that creates practical recipes
+using ingredients supplied by the user.
 
 You don't need to use every ingredient.
 
 You may include additional ingredients, but avoid too many extras.
 
-Format your response in Markdown so it can be rendered on a web page.
+Provide realistic ingredient quantities and clear cooking instructions.
+
+Preparation and cooking times must be expressed in minutes.
+
+Estimate the number of servings.
+
+Return recipe information matching the requested JSON structure.
 `;
+
+const RECIPE_SCHEMA = {
+  type: "object",
+  properties: {
+    title: {
+      type: "string",
+    },
+    description: {
+      type: "string",
+    },
+    ingredients: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+          },
+          quantity: {
+            type: "string",
+          },
+        },
+        required: ["name", "quantity"],
+        additionalProperties: false,
+      },
+    },
+    instructions: {
+      type: "array",
+      items: {
+        type: "string",
+      },
+    },
+    prepTimeMinutes: {
+      type: "integer",
+    },
+    cookTimeMinutes: {
+      type: "integer",
+    },
+    servings: {
+      type: "integer",
+    },
+  },
+  required: [
+    "title",
+    "description",
+    "ingredients",
+    "instructions",
+    "prepTimeMinutes",
+    "cookTimeMinutes",
+    "servings",
+  ],
+  additionalProperties: false,
+};
 
 const app = express();
 
@@ -56,11 +115,23 @@ app.post("/api/recipes", async (request, response) => {
           content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`,
         },
       ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "recipe",
+          strict: true,
+          schema: RECIPE_SCHEMA,
+        },
+      },
     });
 
-    const recipe = completion.choices[0].message.content;
+    const message = completion.choices[0]?.message;
 
-    response.json({ recipe });
+    if (!message?.content) {
+      throw new Error("Groq returned an empty recipe response.");
+    }
+    const recipeData = JSON.parse(message.content);
+    response.json({ recipeData });
   } catch (error) {
     console.error("Groq API error:", error);
     response.status(500).json({

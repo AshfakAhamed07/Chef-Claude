@@ -66,8 +66,8 @@ export default function RecipeGenerator() {
     setError("");
     setRecipeShown(false);
     try {
-      const recipeMarkdown = await generateRecipe(ingredients);
-      setRecipe(recipeMarkdown);
+      const recipeData = await generateRecipe(ingredients);
+      setRecipe(recipeData);
       setRecipeShown(true);
     } catch (err) {
       setError("Sorry, something went wrong. Please try again.");
