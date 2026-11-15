@@ -8,17 +8,8 @@ export default function SavedRecipes({ favourites, onSelect, onDelete }) {
     return null;
   }
 
-  function getRecipeTitle(markdown) {
-    const firstHeading = markdown
-      .split("\n")
-      .find((line) => line.trim().startsWith("#"));
-    if (firstHeading) {
-      return firstHeading
-        .replace(/^#{1,6}\s+/, "")
-        .replace(/\*\*/g, "")
-        .trim();
-    }
-    return "Saved Recipe";
+  function getRecipeTitle(recipe) {
+    return recipe?.title || "Saved Recipe";
   }
 
   function formatDate(isoString) {
