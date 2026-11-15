@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const Groq = require("groq-sdk");
+const analyzeRecipe = require("./services/nutrition");
 
 const SYSTEM_PROMPT = `
 You are Chef Claude, an assistant that creates practical recipes
@@ -131,7 +132,19 @@ app.post("/api/recipes", async (request, response) => {
       throw new Error("Groq returned an empty recipe response.");
     }
     const recipeData = JSON.parse(message.content);
-    response.json({ recipeData });
+
+    let nutritionData = null;
+
+    try {
+      nutritionData = await analyzeRecipe(recipeData);
+    } catch (error) {
+      console.error("Spoonacular API error:", error.message);
+    }
+
+    response.json({
+      recipeData,
+      nutritionData,
+    });
   } catch (error) {
     console.error("Groq API error:", error);
     response.status(500).json({

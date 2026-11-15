@@ -14,7 +14,8 @@ export default function RecipeGenerator() {
   ]);
 
   const [recipeShown, setRecipeShown] = React.useState(false);
-  const [recipe, setRecipe] = React.useState("");
+  const [recipe, setRecipe] = React.useState(null);
+  const [nutritionData, setNutritionData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [ingredientError, setIngredientError] = React.useState("");
@@ -32,7 +33,8 @@ export default function RecipeGenerator() {
   const recipeSection = React.useRef(null);
 
   const isCurrentRecipeSaved = React.useMemo(() => {
-    return favourites.some((fav) => fav.recipe === recipe);
+    if (!recipe?.title) return false;
+    return favourites.some((fav) => fav?.recipe?.title === recipe.title);
   }, [favourites, recipe]);
 
   React.useEffect(() => {
@@ -65,9 +67,12 @@ export default function RecipeGenerator() {
     setLoading(true);
     setError("");
     setRecipeShown(false);
+    setRecipe(null);
+    setNutritionData(null);
     try {
-      const recipeData = await generateRecipe(ingredients);
+      const { recipeData, nutritionData } = await generateRecipe(ingredients);
       setRecipe(recipeData);
+      setNutritionData(nutritionData);
       setRecipeShown(true);
     } catch (err) {
       setError("Sorry, something went wrong. Please try again.");
@@ -86,6 +91,7 @@ export default function RecipeGenerator() {
       recipe,
       ingredients: [...ingredients],
       createdAt: new Date().toISOString(),
+      nutritionData,
     };
     setFavourites((prevFavourites) => [newFavourite, ...prevFavourites]);
   }
@@ -94,6 +100,7 @@ export default function RecipeGenerator() {
     setIngredients(fav.ingredients);
     setRecipe(fav.recipe);
     setRecipeShown(true);
+    setNutritionData(fav.nutritionData);
     setError("");
   }
 
@@ -218,6 +225,7 @@ export default function RecipeGenerator() {
           recipe={recipe}
           onSave={saveFavourite}
           isSaved={isCurrentRecipeSaved}
+          nutritionData={nutritionData}
         />
       )}
 
