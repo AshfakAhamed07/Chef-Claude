@@ -94,12 +94,14 @@ Nutritional analysis is handled independently, so a Spoonacular failure does not
 ## 📁 Project Structure
 
 ```text
-Chef-Claude/
+sage-and-spoon/
 ├── components/
 │   ├── ClaudeRecipe.jsx
 │   ├── IngredientsList.jsx
 │   ├── RecipeGenerator.jsx
 │   └── SavedRecipes.jsx
+├── images/
+│   └── sage-and-spoon-logo.png
 ├── utils/
 │   └── nutrition.js
 ├── server/
@@ -110,6 +112,7 @@ Chef-Claude/
 ├── ai.js
 ├── App.jsx
 ├── index.css
+├── index.html
 ├── index.jsx
 ├── vite.config.js
 └── README.md
@@ -128,16 +131,18 @@ Chef-Claude/
 
 ### 1. Clone the repository
 
+Using SSH:
+
 ```bash
-git clone git@github.com:AshfakAhamed07/Chef-Claude.git
-cd Chef-Claude
+git clone git@github.com:AshfakAhamed07/sage-and-spoon.git
+cd sage-and-spoon
 ```
 
 Alternatively, clone using HTTPS:
 
 ```bash
-git clone https://github.com/AshfakAhamed07/Chef-Claude.git
-cd Chef-Claude
+git clone https://github.com/AshfakAhamed07/sage-and-spoon.git
+cd sage-and-spoon
 ```
 
 ### 2. Install frontend dependencies
