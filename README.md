@@ -1,68 +1,130 @@
-# Chef Claude 👨‍🍳
+# Sage & Spoon 🌿
 
-Chef Claude is a React application that generates recipe ideas based on the ingredients a user has available.
+Sage & Spoon is an AI-powered recipe generation application that helps users turn their available ingredients into practical recipe ideas.
 
-The application uses **Hugging Face Inference Providers** to generate recipes with an AI model and renders the generated response as Markdown.
+Users can manage an ingredient list, generate structured recipes using the Groq API, view nutritional information through Spoonacular, and save their favourite recipes for later.
 
-This project is being built while following **Bob Ziroll's React course on Scrimba** as part of my React learning journey.
+The project started as a learning exercise while following **Bob Ziroll's React Fundamentals course on Scrimba** and has since been extended with additional frontend functionality, a custom Express backend, and external API integrations.
 
 ## 🚧 Project Status
 
-**In progress**
+**In Development**
 
-I'm continuing to build and improve this project as I progress through the React course.
+Core application features have been implemented, including AI-powered recipe generation, nutritional analysis, ingredient management, and saved favourites.
+
+The project is currently being prepared for further testing, production deployment, and portfolio presentation.
 
 ## ✨ Features
 
-* Add ingredients to your ingredient list
-* View ingredients currently available
-* Generate an AI-powered recipe from the available ingredients
-* Render AI-generated recipes as formatted Markdown
-* Generate recipes using Hugging Face Inference Providers
+### Ingredient Management
+- Add ingredients to the available ingredient list.
+- Edit existing ingredients.
+- Remove ingredients.
+- Prevent empty and duplicate ingredient entries.
+- Validate ingredient input.
 
-## 🛠️ Technologies
+### AI Recipe Generation
+- Generate recipe recommendations based on available ingredients.
+- Use the Groq API to generate structured recipe data.
+- Display recipe titles and descriptions.
+- Show ingredient quantities and cooking instructions.
+- Display preparation time, cooking time, and serving information.
 
-* React
-* JavaScript
-* Vite
-* CSS
-* HTML
-* Hugging Face Inference
-* React Markdown
+### Nutritional Analysis
+- Integrate the Spoonacular API for recipe nutritional analysis.
+- Display estimated nutritional information per serving.
+- Show calories, protein, carbohydrates, and fat.
+- Handle nutritional analysis failures without preventing recipe generation.
 
-## 📚 React Concepts Practiced
+### Saved Favourites
+- Save generated recipes to favourites.
+- View previously saved recipes.
+- Restore saved recipes, including their nutritional information.
+- Delete saved favourites with confirmation.
+- Persist favourites using browser `localStorage`.
 
-Through this project, I'm practicing concepts including:
+### Search and Sorting
+- Search saved recipes by recipe title or ingredient.
+- Sort saved recipes by newest or oldest.
+- Display the number of matching results alongside the total number of favourites.
+- Handle empty search results.
 
-* React components
-* Props
-* State
-* Event handling
-* Forms
-* Conditional rendering
-* Rendering lists with `.map()`
-* Component organization
-* React hooks
-* Async functions
-* API integration
-* Environment variables
-* Rendering Markdown content
+### User Experience
+- Display loading feedback during recipe generation.
+- Provide error feedback when requests fail.
+- Automatically scroll to the generated recipe.
+- Responsive layouts for different screen sizes.
 
-## 🤖 AI Integration
+## 🛠️ Technology Stack
 
-The application uses the Hugging Face JavaScript SDK to communicate with Hugging Face Inference Providers.
+| Category | Technologies |
+|---|---|
+| Frontend | React, JavaScript, HTML |
+| Build Tool | Vite |
+| Styling | CSS |
+| Backend | Node.js, Express.js |
+| AI Integration | Groq API |
+| Nutritional Analysis | Spoonacular API |
+| Data Persistence | Browser localStorage |
+| Development Tools | Git, GitHub, VS Code |
 
-The current model used by the application is:
+## 🏗️ Application Architecture
+
+Sage & Spoon uses a React frontend connected to a custom Express backend.
+
+The backend handles communication with external APIs, keeping API credentials out of the frontend application.
+
+### Recipe Generation Flow
+
+1. The user manages their available ingredients in the React application.
+2. The frontend sends the ingredient list to the Express backend.
+3. The backend validates the request.
+4. The Groq API generates structured recipe data.
+5. The backend sends the generated recipe to Spoonacular for nutritional analysis.
+6. The backend returns the recipe and available nutritional information to the frontend.
+7. React displays the recipe and its nutritional breakdown.
+
+**External API responsibilities:**
+
+- **Groq API:** Generates structured recipe data using JSON Schema.
+- **Spoonacular API:** Analyzes the generated recipe and provides nutritional information.
+
+Nutritional analysis is handled independently, so a Spoonacular failure does not prevent an otherwise successful recipe generation.
+
+## 📁 Project Structure
 
 ```text
-openai/gpt-oss-120b:fastest
+Chef-Claude/
+├── components/
+│   ├── ClaudeRecipe.jsx
+│   ├── IngredientsList.jsx
+│   ├── RecipeGenerator.jsx
+│   └── SavedRecipes.jsx
+├── utils/
+│   └── nutrition.js
+├── server/
+│   ├── services/
+│   │   └── nutrition.js
+│   ├── index.js
+│   └── package.json
+├── ai.js
+├── App.jsx
+├── index.css
+├── index.jsx
+├── vite.config.js
+└── README.md
 ```
 
-The model receives the user's available ingredients and generates a recipe recommendation in Markdown format.
-
-> **Note:** The Hugging Face access token is stored in a local `.env` file and is not included in the repository.
+*The structure above highlights the main application files; other configuration and dependency files are omitted for clarity.*
 
 ## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18 or later
+- npm
+- A Groq API key
+- A Spoonacular API key
 
 ### 1. Clone the repository
 
@@ -71,42 +133,113 @@ git clone git@github.com:AshfakAhamed07/Chef-Claude.git
 cd Chef-Claude
 ```
 
-### 2. Install dependencies
+Alternatively, clone using HTTPS:
+
+```bash
+git clone https://github.com/AshfakAhamed07/Chef-Claude.git
+cd Chef-Claude
+```
+
+### 2. Install frontend dependencies
+
+From the project root:
 
 ```bash
 npm install
 ```
 
-### 3. Create an environment file
+### 3. Install backend dependencies
 
-Create a `.env` file in the project root:
-
-```env
-VITE_HF_ACCESS_TOKEN=your_hugging_face_token
+```bash
+cd server
+npm install
 ```
 
-Replace `your_hugging_face_token` with your own Hugging Face access token.
+### 4. Configure environment variables
 
-**Do not commit your `.env` file to GitHub.**
+Create a `.env` file inside the `server` directory:
 
-### 4. Start the development server
+```env
+GROQ_API_KEY=your_groq_api_key
+SPOONACULAR_API_KEY=your_spoonacular_api_key
+```
+
+Replace the placeholder values with your own API keys.
+
+**Important:** Never commit API keys or `.env` files to version control.
+
+### 5. Start the backend server
+
+From the `server` directory:
+
+```bash
+node --watch index.js
+```
+
+The backend runs on port `3001` during local development.
+
+### 6. Start the frontend development server
+
+Open a second terminal, navigate to the project root, and run:
 
 ```bash
 npm run dev
 ```
 
-Then open the local development URL shown in the terminal.
+Open the local development URL provided by Vite in your browser.
+
+Both the frontend and backend must be running for recipe generation and nutritional analysis to work.
+
+## 🔐 Environment Variables
+
+The backend requires the following environment variables:
+
+| Variable | Description |
+|---|---|
+| `GROQ_API_KEY` | API key used for Groq recipe generation |
+| `SPOONACULAR_API_KEY` | API key used for nutritional analysis |
+
+Keep these credentials in the backend's local `.env` file and never expose them in frontend code or commit them to GitHub.
+
+## 📚 Learning and Development
+
+This project began as part of **Bob Ziroll's React Fundamentals course on Scrimba**.
+
+The original project provided an opportunity to practise React fundamentals. It was subsequently extended to explore additional application development concepts, including:
+
+- Component-based architecture.
+- React state management and hooks.
+- Props and component communication.
+- Forms and event handling.
+- Conditional rendering and list rendering.
+- Asynchronous JavaScript and API requests.
+- Frontend and backend communication.
+- Express API development and request validation.
+- External API integration.
+- Structured JSON responses and JSON Schema.
+- Environment variable management.
+- Persistent browser storage.
+- Error handling and application reliability.
+- Git version control and incremental development.
+
+## 🔮 Future Improvements
+
+Planned improvements include:
+
+- Automated frontend and backend testing.
+- Improved data validation and persistence reliability.
+- Production deployment.
+- Additional accessibility and user experience improvements.
+- Expanded documentation.
 
 ## 🎓 Acknowledgment
 
-This project is based on a project from **Bob Ziroll's React course on Scrimba**.
+The initial version of this project was inspired by **Bob Ziroll's React Fundamentals course on Scrimba**.
 
-The project is being used for learning and practicing React development.
+The application has since been extended with additional functionality and integrations as part of my ongoing React and full-stack development learning journey.
 
-## 📌 Learning Journey
+## 👨‍💻 Author
 
-I'm building this project incrementally while learning React and using Git to track my progress.
+**Ashfak Ahamed**
 
-The project started as a simple React recipe application and is gradually being expanded with more advanced React concepts and AI functionality.
-
-More improvements and features will be added as I continue through the course.
+- GitHub: [AshfakAhamed07](https://github.com/AshfakAhamed07)
