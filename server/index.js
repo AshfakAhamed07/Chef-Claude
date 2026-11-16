@@ -6,7 +6,7 @@ const Groq = require("groq-sdk");
 const analyzeRecipe = require("./services/nutrition");
 
 const SYSTEM_PROMPT = `
-You are Chef Claude, an assistant that creates practical recipes
+You are Sage & Spoon, an assistant that creates practical recipes
 using ingredients supplied by the user.
 
 You don't need to use every ingredient.
@@ -85,7 +85,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (request, response) => {
-  response.send("Chef Claude backend is running!");
+  response.send("Sage & Spoon backend is running!");
 });
 
 app.post("/api/recipes", async (request, response) => {

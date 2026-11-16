@@ -29,7 +29,7 @@ export default function ClaudeRecipe({
   return (
     <section className="suggested-recipe-container" aria-live="polite">
       <div className="recipe-header">
-        <h2>Chef Claude Recommends:</h2>
+        <h2>Sage & Spoon Recommends:</h2>
 
         <button
           type="button"
