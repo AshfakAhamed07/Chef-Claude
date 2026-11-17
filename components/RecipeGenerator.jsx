@@ -5,14 +5,7 @@ import SavedRecipes from "./SavedRecipes";
 import { generateRecipe } from "../ai";
 
 export default function RecipeGenerator() {
-  const [ingredients, setIngredients] = React.useState([
-    "chicken",
-    "all the main spices",
-    "corn",
-    "heavy cream",
-    "pasta",
-  ]);
-
+  const [ingredients, setIngredients] = React.useState([]);
   const [recipeShown, setRecipeShown] = React.useState(false);
   const [recipe, setRecipe] = React.useState(null);
   const [nutritionData, setNutritionData] = React.useState(null);
