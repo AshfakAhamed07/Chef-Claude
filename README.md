@@ -44,10 +44,15 @@ The application features a React frontend and a custom Express.js backend that h
 - Handle empty search results.
 
 ### User Experience
+- Provide first-time user guidance explaining how to get started.
+- Display the minimum ingredient requirement and dynamically show how many more ingredients are needed.
+- Enable recipe generation once at least three ingredients have been added.
 - Display loading feedback during recipe generation.
 - Provide error feedback when requests fail.
 - Automatically scroll to the generated recipe.
 - Responsive layouts for different screen sizes.
+
+
 
 ## 🛠️ Technology Stack
 
