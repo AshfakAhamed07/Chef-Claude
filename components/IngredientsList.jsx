@@ -66,7 +66,12 @@ export default function IngredientsList(props) {
       <ul className="ingredients-list" aria-live="polite">
         {ingredientsListItems}
       </ul>
-      {props.ingredients.length > 3 && (
+      {props.ingredients.length < 3 ? (
+        <p className="ingredient-count-message">
+          Add {3 - props.ingredients.length} more ingredient(s) to generate a
+          recipe.
+        </p>
+      ) : (
         <div className="get-recipe-container">
           <div ref={props.ref}>
             <h3>Ready for a recipe?</h3>

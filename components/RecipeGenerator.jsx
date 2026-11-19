@@ -179,6 +179,17 @@ export default function RecipeGenerator() {
 
   return (
     <main>
+      <section className="ingredient-instructions">
+        <h2>What's in your kitchen?</h2>
+        <p>
+          Add at least 3 ingredients to get started. Sage & Spoon will turn your
+          ingredients into a delicious recipe!
+        </p>
+        <p className="ingredient-examples">
+          For example: Chicken, tomatoes, pasta, cheese...
+        </p>
+      </section>
+
       <form action={addIngredient} className="add-ingredient-form">
         <input
           type="text"
