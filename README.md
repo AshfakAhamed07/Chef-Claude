@@ -1,18 +1,12 @@
 # Sage & Spoon 🌿
 
-Sage & Spoon is an AI-powered recipe generation application that helps users turn their available ingredients into practical recipe ideas.
+**Sage & Spoon** is a full-stack AI-powered recipe generation application that helps users turn their available ingredients into practical recipe ideas.
 
-Users can manage an ingredient list, generate structured recipes using the Groq API, view nutritional information through Spoonacular, and save their favourite recipes for later.
+Users can manage ingredients, generate structured recipes using the Groq API, view nutritional information through Spoonacular, and save, search, and organise their favourite recipes.
 
-The project started as a learning exercise while following **Bob Ziroll's React Fundamentals course on Scrimba** and has since been extended with additional frontend functionality, a custom Express backend, and external API integrations.
+The application features a React frontend and a custom Express.js backend that handles API requests and communication with external services.
 
-## 🚧 Project Status
-
-**In Development**
-
-Core application features have been implemented, including AI-powered recipe generation, nutritional analysis, ingredient management, and saved favourites.
-
-The project is currently being prepared for further testing, production deployment, and portfolio presentation.
+**🌐 Live Demo:** [https://sage-and-spoon.netlify.app/](https://sage-and-spoon.netlify.app/)
 
 ## ✨ Features
 
@@ -66,30 +60,41 @@ The project is currently being prepared for further testing, production deployme
 | AI Integration | Groq API |
 | Nutritional Analysis | Spoonacular API |
 | Data Persistence | Browser localStorage |
-| Development Tools | Git, GitHub, VS Code |
+| Deployment | Netlify, Railway |
+| Version Control | Git, GitHub |
 
 ## 🏗️ Application Architecture
 
-Sage & Spoon uses a React frontend connected to a custom Express backend.
+Sage & Spoon uses a React frontend connected to a custom Express.js backend.
 
-The backend handles communication with external APIs, keeping API credentials out of the frontend application.
+The frontend handles the user interface, ingredient management, recipe presentation, and saved favourites. The backend handles request validation and communication with external APIs, keeping API credentials out of the frontend source code.
 
 ### Recipe Generation Flow
 
 1. The user manages their available ingredients in the React application.
 2. The frontend sends the ingredient list to the Express backend.
-3. The backend validates the request.
-4. The Groq API generates structured recipe data.
+3. The backend validates the incoming request.
+4. The Groq API generates structured recipe data using JSON Schema.
 5. The backend sends the generated recipe to Spoonacular for nutritional analysis.
 6. The backend returns the recipe and available nutritional information to the frontend.
-7. React displays the recipe and its nutritional breakdown.
+7. React displays the generated recipe and its nutritional breakdown.
 
 **External API responsibilities:**
 
-- **Groq API:** Generates structured recipe data using JSON Schema.
-- **Spoonacular API:** Analyzes the generated recipe and provides nutritional information.
+- **Groq API:** Generates structured recipe data.
+- **Spoonacular API:** Analyses the generated recipe and provides nutritional information.
 
 Nutritional analysis is handled independently, so a Spoonacular failure does not prevent an otherwise successful recipe generation.
+
+### Deployment Architecture
+
+The application is deployed using separate frontend and backend services.
+
+- **Frontend:** Hosted on Netlify.
+- **Backend:** Hosted on Railway.
+- **API communication:** The frontend communicates with the backend through HTTP requests.
+- **CORS:** Backend requests are restricted to configured frontend origins.
+- **Environment variables:** API credentials are stored in the backend deployment environment.
 
 ## 📁 Project Structure
 
@@ -102,23 +107,26 @@ sage-and-spoon/
 │   └── SavedRecipes.jsx
 ├── images/
 │   └── sage-and-spoon-logo.png
-├── utils/
-│   └── nutrition.js
 ├── server/
 │   ├── services/
 │   │   └── nutrition.js
 │   ├── index.js
-│   └── package.json
+│   ├── package.json
+│   └── .env.example
+├── utils/
+│   └── nutrition.js
 ├── ai.js
 ├── App.jsx
 ├── index.css
 ├── index.html
 ├── index.jsx
-├── vite.config.js
+├── vite.config.mjs
+├── .env.example
+├── package.json
 └── README.md
 ```
 
-*The structure above highlights the main application files; other configuration and dependency files are omitted for clarity.*
+*The structure highlights the main application files; other configuration and dependency files are omitted for clarity.*
 
 ## 🚀 Getting Started
 
@@ -162,14 +170,21 @@ npm install
 
 ### 4. Configure environment variables
 
-Create a `.env` file inside the `server` directory:
+Create a `.env` file inside the `server` directory using the provided `.env.example` as a reference.
 
 ```env
 GROQ_API_KEY=your_groq_api_key
 SPOONACULAR_API_KEY=your_spoonacular_api_key
+PORT=3001
 ```
 
-Replace the placeholder values with your own API keys.
+Next, create a `.env` file in the project root for the frontend:
+
+```env
+VITE_API_URL=http://localhost:3001
+```
+
+Replace the placeholder API keys with your own credentials.
 
 **Important:** Never commit API keys or `.env` files to version control.
 
@@ -178,7 +193,7 @@ Replace the placeholder values with your own API keys.
 From the `server` directory:
 
 ```bash
-node --watch index.js
+npm run dev
 ```
 
 The backend runs on port `3001` during local development.
@@ -197,20 +212,38 @@ Both the frontend and backend must be running for recipe generation and nutritio
 
 ## 🔐 Environment Variables
 
-The backend requires the following environment variables:
+The application uses environment variables to configure API communication and protect sensitive credentials.
 
-| Variable | Description |
+| Variable | Location | Description |
+|---|---|---|
+| `VITE_API_URL` | Frontend | Backend API base URL |
+| `GROQ_API_KEY` | Backend | API key used for Groq recipe generation |
+| `SPOONACULAR_API_KEY` | Backend | API key used for nutritional analysis |
+| `PORT` | Backend | Server port; Railway provides this automatically in production |
+| `FRONTEND_URL` | Backend deployment | Allowed frontend origin for CORS |
+
+The frontend's `VITE_API_URL` is used to communicate with the backend. In production, it points to the deployed Railway service.
+
+Keep API credentials on the backend. Never expose secret API keys through frontend environment variables or commit them to GitHub.
+
+## ☁️ Deployment
+
+Sage & Spoon is deployed using:
+
+| Service | Platform |
 |---|---|
-| `GROQ_API_KEY` | API key used for Groq recipe generation |
-| `SPOONACULAR_API_KEY` | API key used for nutritional analysis |
+| React frontend | [Netlify](https://www.netlify.com/) |
+| Express backend | [Railway](https://railway.com/) |
 
-Keep these credentials in the backend's local `.env` file and never expose them in frontend code or commit them to GitHub.
+**Live application:** [https://sage-and-spoon.netlify.app/](https://sage-and-spoon.netlify.app/)
 
-## 📚 Learning and Development
+The frontend is built using Vite with `npm run build`, and the generated `dist` directory is deployed to Netlify.
 
-This project began as part of **Bob Ziroll's React Fundamentals course on Scrimba**.
+The Express backend is deployed separately on Railway and provides the API endpoints used by the frontend.
 
-The original project provided an opportunity to practise React fundamentals. It was subsequently extended to explore additional application development concepts, including:
+## 📚 Key Concepts and Implementation
+
+This project demonstrates practical application of:
 
 - Component-based architecture.
 - React state management and hooks.
@@ -219,29 +252,25 @@ The original project provided an opportunity to practise React fundamentals. It 
 - Conditional rendering and list rendering.
 - Asynchronous JavaScript and API requests.
 - Frontend and backend communication.
-- Express API development and request validation.
+- REST API development using Express.
+- Request validation and error handling.
 - External API integration.
 - Structured JSON responses and JSON Schema.
 - Environment variable management.
-- Persistent browser storage.
-- Error handling and application reliability.
+- CORS configuration.
+- Persistent browser storage using `localStorage`.
+- Production builds and deployment.
 - Git version control and incremental development.
 
 ## 🔮 Future Improvements
 
-Planned improvements include:
+Potential enhancements include:
 
 - Automated frontend and backend testing.
-- Improved data validation and persistence reliability.
-- Production deployment.
-- Additional accessibility and user experience improvements.
-- Expanded documentation.
-
-## 🎓 Acknowledgment
-
-The initial version of this project was inspired by **Bob Ziroll's React Fundamentals course on Scrimba**.
-
-The application has since been extended with additional functionality and integrations as part of my ongoing React and full-stack development learning journey.
+- Improved accessibility and user experience.
+- Additional recipe filtering and discovery features.
+- Further improvements to data persistence and reliability.
+- Additional backend validation and security enhancements.
 
 ## 👨‍💻 Author
 
