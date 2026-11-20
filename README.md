@@ -104,6 +104,27 @@ Sage & Spoon uses a React frontend connected to a custom Express.js backend.
 
 The frontend handles the user interface, ingredient management, recipe presentation, and saved favourites. The backend handles request validation and communication with external APIs, keeping API credentials out of the frontend source code.
 
+
+## 📸 Application Screenshots
+
+### Ingredient Management
+
+Add, edit, and remove ingredients before generating a recipe.
+
+![Sage & Spoon ingredient management](public/images/ingredient-management.png)
+
+### Generated Recipe & Nutritional Analysis
+
+Generate recipes using available ingredients and view nutritional information, including calories, protein, carbohydrates, and fat.
+
+![Sage & Spoon generated recipe and nutritional analysis](public/images/generated-recipe-nutrition.png)
+
+### Saved Favourites
+
+Save recipes, search your collection, sort saved recipes, and revisit previously generated meals.
+
+![Sage & Spoon saved favourites](public/images/saved-favourites.png)
+
 ### Recipe Generation Flow
 
 1. The user manages their available ingredients in the React application.
