@@ -1,6 +1,6 @@
 {
   "name": "sage-and-spoon",
-  "description": "https://scrimba.com/learn-react-c0e/~0xm2",
+  "description": "An AI-powered recipe generation application built with React, Express, Groq API, and Spoonacular.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

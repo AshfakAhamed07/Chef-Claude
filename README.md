@@ -1,12 +1,42 @@
 # Sage & Spoon 🌿
 
-**Sage & Spoon** is a full-stack AI-powered recipe generation application that helps users turn their available ingredients into practical recipe ideas.
+<p align="center">
+  <img
+    src="public/images/sage-and-spoon-preview.png"
+    alt="Sage & Spoon - AI-powered recipe generation application"
+    width="100%"
+  />
+</p>
 
-Users can manage ingredients, generate structured recipes using the Groq API, view nutritional information through Spoonacular, and save, search, and organise their favourite recipes.
+<h3 align="center">
+  Turn your ingredients into delicious recipes.
+</h3>
 
-The application features a React frontend and a custom Express.js backend that handles API requests and communication with external services.
+<p align="center">
+  An AI-powered recipe generation application that helps users
+  turn their available ingredients into practical recipe ideas.
+</p>
 
-**🌐 Live Demo:** [https://sage-and-spoon.netlify.app/](https://sage-and-spoon.netlify.app/)
+<p align="center">
+  <a href="https://sage-and-spoon.netlify.app/">
+    <strong>🌐 Live Demo</strong>
+  </a>
+  &nbsp; | &nbsp;
+  <a href="https://github.com/AshfakAhamed07/sage-and-spoon">
+    <strong>📂 GitHub Repository</strong>
+  </a>
+</p>
+
+---
+
+Sage & Spoon is a full-stack application featuring a React frontend
+and a custom Express.js backend.
+
+Users can manage ingredients, generate structured recipes using
+the Groq API, view nutritional information through Spoonacular,
+and save, search, and organise their favourite recipes.
+
+
 
 ## ✨ Features
 
@@ -107,11 +137,16 @@ The application is deployed using separate frontend and backend services.
 sage-and-spoon/
 ├── components/
 │   ├── ClaudeRecipe.jsx
+│   ├── Header.jsx
 │   ├── IngredientsList.jsx
 │   ├── RecipeGenerator.jsx
 │   └── SavedRecipes.jsx
 ├── images/
 │   └── sage-and-spoon-logo.png
+├── public/
+│   └── images/
+│       ├── sage-and-spoon-logo.png
+│       └── sage-and-spoon-preview.png
 ├── server/
 │   ├── services/
 │   │   └── nutrition.js
@@ -137,7 +172,7 @@ sage-and-spoon/
 
 ### Prerequisites
 
-- Node.js 18 or later
+- Node.js 20 or later
 - npm
 - A Groq API key
 - A Spoonacular API key
